@@ -1,5 +1,6 @@
 import sys
 import pygame
+import math
 from pygame.sprite import Group
 from bullet import Bullet
 from dbag import Dbag
@@ -66,6 +67,36 @@ def check_play_button(settings, screen, stats, dbags, dude, bullets, play_button
 	button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
 	if button_clicked and not stats.game_active:
 		start_game(settings, stats, dbags, bullets, dude, scoreboard)
+
+def check_joystick(settings, screen, joystick, dude, bullets):
+	# Movement measurement and assignment
+	x1_axis = joystick.get_axis(0)
+	y1_axis = joystick.get_axis(1)
+	if abs(x1_axis) > .1:
+		dude.moving_x = x1_axis
+	else:
+		dude.moving_x = 0
+	if abs(y1_axis) > .1:
+		dude.moving_y = y1_axis
+	else:
+		dude.moving_y = 0
+	
+	# Shooting measurement and bullet creation
+	x2_axis = joystick.get_axis(4)
+	y2_axis = (joystick.get_axis(3) * -1)
+	if (abs(x2_axis) > 0.2) or (abs(y2_axis) > 0.2):
+		angle = math.atan2(y2_axis, x2_axis)
+		if abs(angle) <= (math.pi/4):
+			trajectory='right'
+		elif angle > (math.pi/4) and angle <= (math.pi*3/4):
+			trajectory='up'
+		elif abs(angle) > (math.pi*3/4):
+			trajectory='left'
+		elif angle < (math.pi/-4) and angle >= (math.pi*-3/4):
+			trajectory='down'
+		
+		new_bullet = Bullet(settings, screen, dude, trajectory)
+		bullets.add(new_bullet)
 
 
 def update_screen(settings, screen, stats, dude, bullets, dbags, play_button, scoreboard):

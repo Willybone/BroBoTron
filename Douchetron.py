@@ -21,6 +21,10 @@ def run_game():
 	screen = pygame.display.set_mode((settings.screen_width, settings.screen_height))
 	pygame.display.set_caption("BroBo-Tron")
 	
+	# Initialize the joysticks
+	pygame.joystick.init()
+	joystick = pygame.joystick.Joystick(0)
+	joystick.init()	
 	# Make a dude
 	dude = Dude(settings, screen)
 	# Make a Group for bullets
@@ -37,6 +41,7 @@ def run_game():
 	while True:
 		# Listen for events and quit command
 		gf.check_events(settings, screen, stats, dbags, dude, bullets, play_button, scoreboard)
+		gf.check_joystick(settings, screen, joystick, dude, bullets)
 		
 		if stats.game_active:
 			# Update the dude, bullets, screen
