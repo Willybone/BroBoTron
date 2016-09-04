@@ -24,11 +24,13 @@ def run_game():
 	# Initialize the joysticks
 	pygame.joystick.init()
 	joystick = pygame.joystick.Joystick(0)
-	joystick.init()	
+	joystick.init()
 	# Make a dude
 	dude = Dude(settings, screen)
 	# Make a Group for bullets
 	bullets = Group()
+	bullet_rate = settings.bullet_rate
+	bullet_count = settings.bullet_rate
 	# Make a Group of dbags
 	dbags = Group()
 	# Start games stats
@@ -41,7 +43,11 @@ def run_game():
 	while True:
 		# Listen for events and quit command
 		gf.check_events(settings, screen, stats, dbags, dude, bullets, play_button, scoreboard)
-		gf.check_joystick(settings, screen, joystick, dude, bullets)
+		gf.check_joystick(settings, screen, joystick, dude, bullets, bullet_count)
+		if bullet_count < bullet_rate:
+			bullet_count += 1
+		else:
+			bullet_count = 0
 		
 		if stats.game_active:
 			# Update the dude, bullets, screen

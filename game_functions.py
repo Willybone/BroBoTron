@@ -68,7 +68,7 @@ def check_play_button(settings, screen, stats, dbags, dude, bullets, play_button
 	if button_clicked and not stats.game_active:
 		start_game(settings, stats, dbags, bullets, dude, scoreboard)
 
-def check_joystick(settings, screen, joystick, dude, bullets):
+def check_joystick(settings, screen, joystick, dude, bullets, bullet_count):
 	# Movement measurement and assignment
 	x1_axis = joystick.get_axis(0)
 	y1_axis = joystick.get_axis(1)
@@ -95,8 +95,11 @@ def check_joystick(settings, screen, joystick, dude, bullets):
 		elif angle < (math.pi/-4) and angle >= (math.pi*-3/4):
 			trajectory='down'
 		
-		new_bullet = Bullet(settings, screen, dude, trajectory)
-		bullets.add(new_bullet)
+		# Check if it's time to spit out a bullet
+		if (bullet_count >= settings.bullet_rate) and (len(bullets) 
+			< settings.bullet_max_num):
+			new_bullet = Bullet(settings, screen, dude, trajectory)
+			bullets.add(new_bullet)
 
 
 def update_screen(settings, screen, stats, dude, bullets, dbags, play_button, scoreboard):
