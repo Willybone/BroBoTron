@@ -21,10 +21,16 @@ def run_game():
 	screen = pygame.display.set_mode((settings.screen_width, settings.screen_height))
 	pygame.display.set_caption("BroBo-Tron")
 	
+	# Initialize the joysticks
+	pygame.joystick.init()
+	joystick = pygame.joystick.Joystick(0)
+	joystick.init()
 	# Make a dude
 	dude = Dude(settings, screen)
 	# Make a Group for bullets
 	bullets = Group()
+	bullet_rate = settings.bullet_rate
+	bullet_count = settings.bullet_rate
 	# Make a Group of dbags
 	dbags = Group()
 	# Start games stats
@@ -32,11 +38,21 @@ def run_game():
 	scoreboard = Scoreboard(settings, screen, stats)
 	# Play button
 	play_button = Button(settings, screen, "Play")
+	# Set Fire sound
+	pygame.mixer.pre_init(44100, -16, 2, 2048) # setup mixer to avoid sound lag
+	pygame.init()                      #initialize pygame
+	pew = pygame.mixer.Sound('sounds/pew.wav')
 	
 	# Start the main loop for the game
 	while True:
 		# Listen for events and quit command
-		gf.check_events(settings, screen, stats, dbags, dude, bullets, play_button, scoreboard)
+		gf.check_events()
+		gf.check_joystick(settings, screen, stats, joystick, dude, 
+			dbags, scoreboard, bullets, bullet_count, pew)
+		if bullet_count < bullet_rate:
+			bullet_count += 1
+		else:
+			bullet_count = 0
 		
 		if stats.game_active:
 			# Update the dude, bullets, screen

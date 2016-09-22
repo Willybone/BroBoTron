@@ -14,6 +14,7 @@ class Settings():
 		self.bullet_long = 20
 		self.bullet_color = (241, 108, 4)
 		self.bullet_max_num = 5
+		self.bullet_rate = 35
 		
 		# Dbag settings
 		self.dbag_starting_num = 3
@@ -37,8 +38,9 @@ class Settings():
 		
 	def initialize_dynamic_settings(self):
 		self.dude_speed_factor = 1
-		self.dbag_speed_factor = .25
+		self.dbag_speed_factor = .1
 		self.bullet_speed_factor = 2.5
+		self.dbag_points = 10
 		
 	def increase_speed(self):
 		self.dude_speed_factor *= self.speedup_scale

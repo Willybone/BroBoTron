@@ -9,7 +9,7 @@ class Dude(Sprite):
 		self.settings = settings
 		
 		# Get dude image and get its rect.
-		self.image = pygame.image.load('images\dude.bmp')
+		self.image = pygame.image.load('images/dude.png')
 		self.rect = self.image.get_rect()
 		self.screen_rect = screen.get_rect()
 		
@@ -22,10 +22,8 @@ class Dude(Sprite):
 		self.centerydec = float(self.rect.centery)
 		
 		# Setting the action flags
-		self.moving_right = False
-		self.moving_left = False
-		self.moving_up = False
-		self.moving_down = False
+		self.moving_x = 0.0
+		self.moving_y = 0.0
 		
 	def center_dude(self):
 		self.centerxdec = self.screen_rect.right / 2
@@ -44,12 +42,14 @@ class Dude(Sprite):
 		centerxdec and centerydec, which are floats. These numbers
 		are then assigned to rect.centerx and rect.centery prior
 		to rendering to the screen """
-		if self.moving_right and self.rect.right < self.screen_rect.right - 50:
-			self.centerxdec += self.settings.dude_speed_factor
-		if self.moving_left and self.rect.left > 50:
-			self.centerxdec -= self.settings.dude_speed_factor
-		if self.moving_up and self.rect.top > self.screen_rect.top + 50:
-			self.centerydec -= self.settings.dude_speed_factor
-		if self.moving_down and self.rect.bottom < self.screen_rect.bottom - 50:
-			self.centerydec += self.settings.dude_speed_factor
+		self.newcenterxdec = self.centerxdec + (self.moving_x * 
+				self.settings.dude_speed_factor)
+		self.newcenterydec = self.centerydec + (self.moving_y * 
+				self.settings.dude_speed_factor)
+		if self.newcenterxdec > 40 and (self.newcenterxdec < 
+			self.settings.screen_width - 40): 
+			self.centerxdec = self.newcenterxdec
+		if self.newcenterydec > 40 and (self.newcenterydec < 
+			self.settings.screen_height -40):
+			self.centerydec = self.newcenterydec
 

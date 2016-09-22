@@ -3,7 +3,7 @@ from pygame.sprite import Sprite
 
 class Bullet(Sprite):
 	""" A class of Bullets fired from the dude """
-	def __init__ (self, settings, screen, dude, trajectory):
+	def __init__ (self, settings, screen, dude, trajectory, pew):
 		# Create a bullet at the dude's location
 		super(Bullet, self).__init__()
 		self.screen = screen
@@ -43,6 +43,9 @@ class Bullet(Sprite):
 		# Store bullet's position as a decimal
 		self.ydec = float(self.rect.y)
 		self.xdec = float(self.rect.x)
+		
+		# Make a sound
+		pew.play()
 		
 	def update(self):
 		# Move the bullet upwards

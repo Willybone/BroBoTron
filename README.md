@@ -1,6 +1,5 @@
 # BroBoTron
 My project for "Crash Course in Python", a crappy version of Robotron
-
 #
 #
 # This game requires the Pygame library be installed
@@ -11,18 +10,12 @@ My project for "Crash Course in Python", a crappy version of Robotron
 # 
 # 
 # 
-# 
 # CONTROLS
 # 
-# Use mouse to click Play button or press the P key
-# Move:
-#	A = Left
-#	D = Right
-#	W = Up
-#	S = Down
+# Requires a twin analog joystick to play
+# Right stick shoots
+# Left stick moves
+# Hit Start button to pause or start a game
 #
-#	Arrow Keys = Fire
-#
-# 	Escape = Quit
 #
 #

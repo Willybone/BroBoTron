@@ -9,14 +9,16 @@ class Dbag(Sprite):
 		self.screen = screen
 		self.settings = settings
 		
-		dbag_selector = randint(1,3)
+		dbag_selector = randint(1,4)
 		if dbag_selector == 1:
-			self.image = pygame.image.load('images\squirt.bmp')
+			self.image = pygame.image.load('images/squirt.png')
 		elif dbag_selector == 2:
-			self.image = pygame.image.load('images\\beedrill.bmp')
+			self.image = pygame.image.load('images/beedrill.png')
 		elif dbag_selector == 3:
-			self.image = pygame.image.load('images\meowth.bmp')				
-#		self.image = pygame.image.load('images\dbag.bmp')
+			self.image = pygame.image.load('images/bulbasaur.png')				
+		elif dbag_selector == 4:
+			self.image = pygame.image.load('images/koffing.png')
+		
 		self.rect = self.image.get_rect()
 		self.screen_rect = screen.get_rect()
 		
